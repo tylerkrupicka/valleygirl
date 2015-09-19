@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Like Blocker",
+  "description": "Remove like buttons from your webpages.",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Like Blocker"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["jquery.js", "script.js"]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+  ]
+}
