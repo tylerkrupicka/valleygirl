@@ -1,35 +1,19 @@
 $(document).ready(function() {
-    setTimeout(function() {
-
-    if ($) {
-        var likes = $('.UFILikeLinkIcon');
+/*
+    var likes = $('.UFILikeLinkIcon');
         for (var i = 0; i < likes.length; i++) {
             likes[i].click();
         }
     }
-
-
-
-
-    var likeUrls = [];
-    var $iframes = $('iframe[title="fb:like Facebook Social Plugin"]');
-    console.log('!!!!!!!!!!!!!!');
-    console.log($iframes);
-    $iframes.each(function(i) {
-        console.log('!!!!!!!!!!!!!!!!!!');
-        console.log($iframes[i]);
-        likeUrls.push($iframes[i].src);
-        $iframes[i].remove();
-    });
-    $('body').append('<div id="lbloadContainer" style="display:none;"></div>');
-    for (var i = 0; i < likeUrls.length; i++) {
-        $('#lbloadContainer').load(likeUrls[i], function() {
-            var tmpBtn = $('#lbloadContainer button');
-            tmpBtn.click();
-            tmpBtn.remove();
-        });
+*/
+    var likebtns = $('.pluginButton[title="Like"] button[title="Like"]');
+    $('div[title="Unlike"]').remove();
+    $('.pluginCountButton').remove();
+    for (var i = 0; i < likebtns.length; i++) {
+        var cNames = $('div[title="Like"]').attr('class');
+        var likebtn = likebtns[i];
+        if (!$('div[title="Like"]').hasClass('hidden_elem')) {
+            likebtn.click();
+        }
     }
-    // cleanup
-    $('#lbloadContainer').remove();
-    }, 5000);
 });
