@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var likes = $('.UFILikeLinkIcon');
+    var likes = $('.UFILikeLink');
         for (var i = 0; i < likes.length; i++) {
             likes[i].click();
         }
