@@ -1,11 +1,11 @@
 $(document).ready(function() {
-/*
-    var likes = $('.UFILikeLinkIcon');
+
+    var likes = $('.UFILikeLink');
         for (var i = 0; i < likes.length; i++) {
             likes[i].click();
         }
     }
-*/
+
     var likebtns = $('.pluginButton[title="Like"] button[title="Like"]');
     $('div[title="Unlike"]').remove();
     $('.pluginCountButton').remove();

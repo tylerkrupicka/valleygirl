@@ -1,2 +1,2 @@
 # liker
-extension to like every facebook button
+Pandora's box in 40 lines of code
