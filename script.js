@@ -10,11 +10,12 @@ $(document).ready(function() {
         var likebtns = $('.pluginButton[title="Like"] button[title="Like"]'); //find all like buttons
         $('div[title="Unlike"]').remove(); //remove unlike transition
         $('.pluginCountButton').remove(); //remove like bubble
+        $('._5jjm').parent().remove();
         for (var i = 0; i < likebtns.length; i++) {
             var cNames = $('div[title="Like"]').attr('class');
             var likebtn = likebtns[i];
             if (!$('div[title="Like"]').hasClass('hidden_elem')) {
-                likebtn.click(); //click button
+                likebtn.click();
             }
         }
     }
