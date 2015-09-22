@@ -25,6 +25,23 @@ function cleanupFacebook(){
         // change 'Unlike' to 'Like' after liking a comment
         if (like.text() === "Unlike") {
             like.text("Like");
+            var likeParent = like.parent();
+            likeParent.find('span').each(function() {
+                var isLikeCount = $(this).attr('data-reactid').indexOf('likeCount') > -1
+                    && $(this).attr('role') !== 'presentation';
+                // if you're the only one who likes the comment, remove the thumbs up, like count, and dot
+                if (isLikeCount && $(this).text() == "1") {
+                    likeParent.find('a.UFICommentLikedButton').hide();
+                    likeParent.find('span[role="presentation"]:eq(1)').hide();
+                } else if (isLikeCount) {
+                    // otherwise decrement the number of likes by 1
+                    var currentLikes = Number($(this).text());
+                    $(this).text(String(currentLikes - 1));
+                    // remove tooltip and 'see who liked' functionality
+                    likeParent.find('a.UFICommentLikedButton').attr('ajaxify', '')
+                        .attr('data-hover', '').removeAttr('href');
+                }
+            });
         }
 
         // finding row with the likes and seen count
@@ -33,22 +50,32 @@ function cleanupFacebook(){
         var ufiLikeSentenceText = ufiRow.find('.UFILikeSentenceText');
         // look for instances of 'You like this.' or 'You, ... like this' and remove
         ufiLikeSentenceText.find('span').each(function() {
+            var likeSpan = $(this);
             // when only you like this, either float the seen count to the left or remove row if seen count isn't present
-            if ($(this).text() === "You like this.") {
-                $(this).hide();
+            if (likeSpan.text() === "You like this.") {
+                likeSpan.hide();
                 // float seen count to right
                 if (ufiRow.find('.UFISeenCount').length > 0) {
                     ufiRow.find('.UFISeenCountRight').removeClass('UFISeenCountRight');
-                    ufiRow.find('.rfloat').removeClass('rfloat');
-                    ufiRow.find('._ohf').removeClass('_ohf');
+                    ufiRow.find('> .clearfix > .rfloat').removeClass('rfloat');
+                    ufiRow.find('> .clearfix > ._ohf').removeClass('_ohf');
                 // remove bar
                 } else {
                     ufiLikeSentenceText.remove();
                 }
             }
             // otherwise just remove the 'you...' part
-            if ($(this).text() === "You, " || $(this).text() === "You and ") {
-                $(this).hide();
+            if (likeSpan.text() === "You, " || likeSpan.text() === "You and ") {
+                likeSpan.hide();
+                // if only one other person liked the post, then replace ' like this.' with ' likes this'
+                var otherLikes = likeSpan.parent().find('> a');
+                if (otherLikes.length === 1 && otherLikes.text().indexOf(' other') === -1) {
+                    ufiLikeSentenceText.children().find('> span').each(function() {
+                        if ($(this).text().indexOf(' this.') > -1) {
+                            $(this).text(' likes this.');
+                        }
+                    });
+                }
             }
         });
     }
@@ -73,7 +100,7 @@ $(document).ready(function() {
     if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything
 
         likeAllFacebook();
-        cleanupFacebook(););
+        cleanupFacebook();
         clickiFrameButtons();
 
     }
