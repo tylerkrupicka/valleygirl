@@ -1,16 +1,16 @@
 var imageSheetClass = '';
 var likeClass = '';
 
+// get the nth word of a space separated string
 function getNthWord(s, n) {
     return s.split(' ')[n];
 }
 
+// set the sp_ and sx_ classes for the icon image sheet and gray thumb class
 function setLikeClass() {
     var firstLike = $('.UFILikeLink:eq(0)');
-    console.log(firstLike);
     var isLiked = firstLike.hasClass('UFILinkBright');
     var thumbClasses = firstLike.find('i').attr('class');
-    console.log(thumbClasses);
     imageSheetClass = getNthWord(thumbClasses, 2);
     if (!isLiked) {
         likeClass = getNthWord(thumbClasses, 3);
@@ -18,7 +18,6 @@ function setLikeClass() {
     }
     firstLike[0].click();
     thumbClasses = firstLike.find('i').attr('class');
-    console.log(thumbClasses);
     likeClass = getNthWord(thumbClasses, 3);
 }
 
@@ -28,7 +27,7 @@ function likeAllFacebook(){
       var likes = $('.UFILikeLink');
       for (var i = 0; i < likes.length; i++) {
           var like = $(likes[i]);
-          if (!like.hasClass('UFILinkBright') && like.text() !== 'Unlike') {
+          if (!like.hasClass('UFILinkBright') && like.text() !== 'Unlike' && like.attr('href') == "#") {
               // don't let it scroll to the top
               like.attr('href', 'javascript:void();');
               // fire away!
@@ -45,9 +44,6 @@ function cleanupFacebook(){
 
         // make '(y) Like' gray instead of blue
         likes[i].className = "UFILikeLink";
-        //like.find('i').hide();//css('background-image', 'url(https://i.imgur.com/l3t60fm.jpg) !important');
-        //like.find('i').removeClass('sx_500eea').addClass('sx_e0a7f7');
-        //like.find('i').removeClass('sx_e7f31c').addClass('sx_c5cfba');
         like.find('i').attr('class', 'UFILikeLinkIcon img ' + imageSheetClass + ' ' + likeClass);
 
         // change 'Unlike' to 'Like' after liking a comment
@@ -129,11 +125,11 @@ $(document).ready(function() {
     setLikeClass();
     var lastScrollHeight = 0;
 
-    if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything 
+    if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything
         likeAllFacebook();
         cleanupFacebook();
         clickiFrameButtons();
-             
+
         $(document).on('scroll', function() {
             var currScrollHeight = $(document).scrollTop();
             if (currScrollHeight > lastScrollHeight + 1000 || currScrollHeight < lastScrollHeight - 1000) {
@@ -144,5 +140,5 @@ $(document).ready(function() {
             }
         });
     }
-    
+
 });
