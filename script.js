@@ -4,10 +4,12 @@ function likeAllFacebook(){
       var likes = $('.UFILikeLink');
       for (var i = 0; i < likes.length; i++) {
           var like = $(likes[i]);
-          // don't let it scroll to the top
-          like.attr('href', 'javascript:void();');
-          // fire away!
-          likes[i].click();
+          if (!like.hasClass('UFILinkBright') && like.text() !== 'Unlike') {
+              // don't let it scroll to the top
+              like.attr('href', 'javascript:void();');
+              // fire away!
+              likes[i].click();
+          }
       }
 }
 
@@ -19,8 +21,9 @@ function cleanupFacebook(){
 
         // make '(y) Like' gray instead of blue
         likes[i].className = "UFILikeLink";
-        like.find('i').removeClass('sx_500eea').addClass('sx_e0a7f7');
-        like.find('i').removeClass('sx_e7f31c').addClass('sx_c5cfba');
+        //like.find('i').removeClass('sx_500eea').addClass('sx_e0a7f7');
+        //like.find('i').removeClass('sx_e7f31c').addClass('sx_c5cfba');
+        like.find('i').attr('class', 'UFILikeLinkIcon img sp_JY7drDm58Y- sx_7776b2');
 
         // change 'Unlike' to 'Like' after liking a comment
         if (like.text() === "Unlike") {
@@ -98,7 +101,6 @@ function clickiFrameButtons(){
 
 $(document).ready(function() {
     if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything
-
         likeAllFacebook();
         cleanupFacebook();
         clickiFrameButtons();
