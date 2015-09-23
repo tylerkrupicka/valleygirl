@@ -132,7 +132,7 @@ $(document).ready(function() {
 
         $(document).on('scroll', function() {
             var currScrollHeight = $(document).scrollTop();
-            if (currScrollHeight > lastScrollHeight + 1000 || currScrollHeight < lastScrollHeight - 1000) {
+            if (currScrollHeight > lastScrollHeight + 500 || currScrollHeight < lastScrollHeight - 500) {
                 likeAllFacebook();
                 cleanupFacebook();
                 clickiFrameButtons();
