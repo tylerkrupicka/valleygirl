@@ -1,3 +1,27 @@
+var imageSheetClass = '';
+var likeClass = '';
+
+function getNthWord(s, n) {
+    return s.split(' ')[n];
+}
+
+function setLikeClass() {
+    var firstLike = $('.UFILikeLink:eq(0)');
+    console.log(firstLike);
+    var isLiked = firstLike.hasClass('UFILinkBright');
+    var thumbClasses = firstLike.find('i').attr('class');
+    console.log(thumbClasses);
+    imageSheetClass = getNthWord(thumbClasses, 2);
+    if (!isLiked) {
+        likeClass = getNthWord(thumbClasses, 3);
+        return;
+    }
+    firstLike[0].click();
+    thumbClasses = firstLike.find('i').attr('class');
+    console.log(thumbClasses);
+    likeClass = getNthWord(thumbClasses, 3);
+}
+
 //click every like button on facebook
 function likeAllFacebook(){
       //like everything on the news feed
@@ -21,9 +45,10 @@ function cleanupFacebook(){
 
         // make '(y) Like' gray instead of blue
         likes[i].className = "UFILikeLink";
+        //like.find('i').hide();//css('background-image', 'url(https://i.imgur.com/l3t60fm.jpg) !important');
         //like.find('i').removeClass('sx_500eea').addClass('sx_e0a7f7');
         //like.find('i').removeClass('sx_e7f31c').addClass('sx_c5cfba');
-        like.find('i').attr('class', 'UFILikeLinkIcon img sp_JY7drDm58Y- sx_7776b2');
+        like.find('i').attr('class', 'UFILikeLinkIcon img ' + imageSheetClass + ' ' + likeClass);
 
         // change 'Unlike' to 'Like' after liking a comment
         if (like.text() === "Unlike") {
@@ -101,6 +126,7 @@ function clickiFrameButtons(){
 
 $(document).ready(function() {
 
+    setLikeClass();
     var lastScrollHeight = 0;
 
     if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything 
@@ -117,7 +143,6 @@ $(document).ready(function() {
                 lastScrollHeight = currScrollHeight;
             }
         });
-        
     }
     
 });
