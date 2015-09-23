@@ -4,7 +4,7 @@ function likeAllFacebook(){
       var likes = $('.UFILikeLink');
       for (var i = 0; i < likes.length; i++) {
           var like = $(likes[i]);
-          if (!like.hasClass('UFILinkBright') && like.text() !== 'Unlike') {
+          if (!like.hasClass('UFILinkBright') && like.text() !== 'Unlike' && like.attr('href') == "#") {
               // don't let it scroll to the top
               like.attr('href', 'javascript:void();');
               // fire away!
@@ -103,11 +103,11 @@ $(document).ready(function() {
 
     var lastScrollHeight = 0;
 
-    if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything 
+    if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything
         likeAllFacebook();
         cleanupFacebook();
         clickiFrameButtons();
-             
+
         $(document).on('scroll', function() {
             var currScrollHeight = $(document).scrollTop();
             if (currScrollHeight > lastScrollHeight + 1000 || currScrollHeight < lastScrollHeight - 1000) {
@@ -117,7 +117,7 @@ $(document).ready(function() {
                 lastScrollHeight = currScrollHeight;
             }
         });
-        
+
     }
-    
+
 });
