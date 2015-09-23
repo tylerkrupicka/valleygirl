@@ -1,4 +1,4 @@
-# Liker
+# Valley Girl
 A chrome extension for horrible people.
 
 ###Functionality
