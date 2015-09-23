@@ -11,7 +11,7 @@ The only thing worse than liking everything is not being able to tell so we did 
 Why not?
 
 ###But really why????
-We didn't really make this with the expectation that people would willingly install this on their browser. It's more of a joke for messing with your friends. If you can actually find a legitimate use for this we'd love to hear it.
+We didn't really make this with the expectation that people would willingly install this on their browser -- it's more of a joke for messing with your friends. If you can actually find a legitimate use for this we'd love to hear it.
 
 ░░░░░░░░░░░░▄▄
 ░░░░░░░░░░░█░░█
