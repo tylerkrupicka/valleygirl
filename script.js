@@ -1,14 +1,45 @@
+var likeFlag = '2b3m91';
+
+// returns true if the given element has the likeFlag
+function isLiked($el) {
+    return $el.attr('data-gh') === likeFlag;
+}
+
+// set flat to likeFlag for something that is liked
+function flagLiked($el) {
+    $el.attr('data-gh', likeFlag);
+}
+
+// set flag to empty string for something that isn't liked
+function flagUnliked($el) {
+    $el.attr('data-gh', '');
+}
+
+// only call this once on page load to flag things that are liked
+function flagLikes() {
+    var likes = $('.UFILikeLink');
+    for (var i = 0; i < likes.length; i++) {
+        var like = $(likes[i]);
+        if (!like.hasClass('UFILinkBright' && like.text() !== 'Unlike')) {
+            flagUnliked(like);
+        } else {
+            flagLiked(like);
+        }
+    }
+}
+
 //click every like button on facebook
 function likeAllFacebook(){
       //like everything on the news feed
       var likes = $('.UFILikeLink');
       for (var i = 0; i < likes.length; i++) {
           var like = $(likes[i]);
-          if (!like.hasClass('UFILinkBright') && like.text() !== 'Unlike') {
+          if (!isLiked(like)) {
               // don't let it scroll to the top
               like.attr('href', 'javascript:void();');
               // fire away!
               likes[i].click();
+              like.attr('title', '');
           }
       }
 }
@@ -20,14 +51,16 @@ function cleanupFacebook(){
         var like = $(likes[i]);
 
         // make '(y) Like' gray instead of blue
+        if (like.hasClass('UFILikeLinkBright')) {
+            flagLiked(like);
+        }
         likes[i].className = "UFILikeLink";
-        //like.find('i').removeClass('sx_500eea').addClass('sx_e0a7f7');
-        //like.find('i').removeClass('sx_e7f31c').addClass('sx_c5cfba');
         like.find('i').attr('class', 'UFILikeLinkIcon img sp_JY7drDm58Y- sx_7776b2');
 
         // change 'Unlike' to 'Like' after liking a comment
         if (like.text() === "Unlike") {
             like.text("Like");
+            flagLiked(like);
             var likeParent = like.parent();
             likeParent.find('span').each(function() {
                 var isLikeCount = $(this).attr('data-reactid').indexOf('likeCount') > -1
@@ -64,7 +97,7 @@ function cleanupFacebook(){
                     ufiRow.find('> .clearfix > ._ohf').removeClass('_ohf');
                 // remove bar
                 } else {
-                    ufiLikeSentenceText.remove();
+                    ufiLikeSentenceText.parent().parent().parent().hide();
                 }
             }
             // otherwise just remove the 'you...' part
@@ -100,10 +133,24 @@ function clickiFrameButtons(){
 }
 
 $(document).ready(function() {
-    if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything
-        likeAllFacebook();
+
+    var maxScrollHeight = 0;
+
+    if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything 
+        flagLikes();  
         cleanupFacebook();
         clickiFrameButtons();
-
+             
+        $(document).on('scroll', function() {
+            var currScrollHeight = $(document).scrollTop();
+            if (currScrollHeight > maxScrollHeight + 1000) {
+                likeAllFacebook();
+                cleanupFacebook();
+                clickiFrameButtons();
+                maxScrollHeight = currScrollHeight;
+            }
+        });
+        
     }
+    
 });
