@@ -9,16 +9,18 @@ function getNthWord(s, n) {
 // set the sp_ and sx_ classes for the icon image sheet and gray thumb class
 function setLikeClass() {
     var firstLike = $('.UFILikeLink:eq(0)');
-    var isLiked = firstLike.hasClass('UFILinkBright');
-    var thumbClasses = firstLike.find('i').attr('class');
-    imageSheetClass = getNthWord(thumbClasses, 2);
-    if (!isLiked) {
+    if (firstLike.length > 0) {
+        var isLiked = firstLike.hasClass('UFILinkBright');
+        var thumbClasses = firstLike.find('i').attr('class');
+        imageSheetClass = getNthWord(thumbClasses, 2);
+        if (!isLiked) {
+            likeClass = getNthWord(thumbClasses, 3);
+            return;
+        }
+        firstLike[0].click();
+        thumbClasses = firstLike.find('i').attr('class');
         likeClass = getNthWord(thumbClasses, 3);
-        return;
     }
-    firstLike[0].click();
-    thumbClasses = firstLike.find('i').attr('class');
-    likeClass = getNthWord(thumbClasses, 3);
 }
 
 //click every like button on facebook
