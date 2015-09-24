@@ -43,6 +43,7 @@ function cleanupFacebook(){
     var likes = $('.UFILikeLink');
     for (var i = 0; i < likes.length; i++) {
         var like = $(likes[i]);
+        like.attr('href', 'javascript:void();');
 
         // make '(y) Like' gray instead of blue
         likes[i].className = "UFILikeLink";
@@ -51,6 +52,7 @@ function cleanupFacebook(){
         // change 'Unlike' to 'Like' after liking a comment
         if (like.text() === "Unlike") {
             like.text("Like");
+            like.attr('title', 'Like this comment');
             var likeParent = like.parent();
             likeParent.find('span').each(function() {
                 var isLikeCount = $(this).attr('data-reactid').indexOf('likeCount') > -1
@@ -80,7 +82,7 @@ function cleanupFacebook(){
             // when only you like this, either float the seen count to the left or remove row if seen count isn't present
             if (likeSpan.text() === "You like this.") {
                 likeSpan.hide();
-                // float seen count to right
+                // float seen count to left
                 if (ufiRow.find('.UFISeenCount').length > 0) {
                     ufiRow.find('.UFISeenCountRight').removeClass('UFISeenCountRight');
                     ufiRow.find('> .clearfix > .rfloat').removeClass('rfloat');
@@ -124,10 +126,9 @@ function clickiFrameButtons(){
 
 $(document).ready(function() {
 
-    setLikeClass();
-    var lastScrollHeight = 0;
-
     if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything
+        var lastScrollHeight = 0;
+        setLikeClass();
         likeAllFacebook();
         cleanupFacebook();
         clickiFrameButtons();
