@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Valley Girl",
+  "description": "Like, almost anything.",
+  "version": "1.3.3.7",
+  "icons": { "16": "icon16.png",
+                   "48": "icon48.png",
+                   "128": "icon128.png" },
+  "browser_action": {
+    "default_title": " "
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["jquery.js", "script.min.js"],
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "activeTab"
+  ]
+}
