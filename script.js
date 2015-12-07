@@ -33,26 +33,21 @@ function cleanupFacebook(){
             like.text("Like");
             like.attr('title', 'Like this comment');
             var likeParent = like.parent();
-            likeParent.find('span').each(function() {
-                var isLikeCount = $(this).attr('data-reactid').indexOf('likeCount') > -1
-                    && $(this).attr('role') !== 'presentation';
-                // if you're the only one who likes the comment, remove the thumbs up, like count, and dot
-                if (isLikeCount && $(this).text() == "1") {
-                    likeParent.find('a.UFICommentLikedButton').hide();
-                    likeParent.find('span[role="presentation"]:eq(1)').hide();
-                } else if (isLikeCount) {
-                    // otherwise decrement the number of likes by 1
-                    var currentLikes = Number($(this).text());
-                    $(this).text(String(currentLikes - 1));
-                    // remove tooltip and 'see who liked' functionality
-                    likeParent.find('a.UFICommentLikedButton').attr('ajaxify', '')
-                        .attr('data-hover', '').removeAttr('href');
-                }
-            });
+            var likeCountSpan = $(likeParent.find('i.UFICommentLikeIcon').siblings('span')[0]);
+            if (likeCountSpan.text() == "1") {
+                likeParent.find('a.UFICommentLikedButton').hide();
+                likeParent.find('span[role="presentation"]:eq(1)').hide();
+            } else {
+                var currentLikes = Number(likeCountSpan.text());
+                likeCountSpan.text(String(currentLikes - 1));
+                // remove tooltip and 'see who liked' functionality
+                likeParent.find('a.UFICommentLikedButton').attr('ajaxify', '')
+                    .attr('data-hover', '').removeAttr('href');
+            }
         }
-
-        // finding row with the likes and seen count
-        var ufiRow = like.parent().parent().parent().parent().find('.UFIRow');
+    }
+    $('.UFIRow').each(function() {
+        var ufiRow = $(this);
         // find the bar displaying who liked the post
         var ufiLikeSentenceText = ufiRow.find('.UFILikeSentenceText');
         // look for instances of 'You like this.' or 'You, ... like this' and remove
@@ -85,7 +80,7 @@ function cleanupFacebook(){
                 }
             }
         });
-    }
+    });
 }
 
 //click like buttons on sites external to Facebook
