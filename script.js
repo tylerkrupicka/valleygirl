@@ -1,8 +1,3 @@
-// get the nth word of a space separated string
-function getNthWord(s, n) {
-    return s.split(' ')[n];
-}
-
 //click every like button on facebook
 function likeAllFacebook(){
       //like everything on the news feed
@@ -116,5 +111,4 @@ $(document).ready(function() {
             }
         });
     }
-
 });
