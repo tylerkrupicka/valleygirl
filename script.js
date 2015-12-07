@@ -1,26 +1,6 @@
-var imageSheetClass = '';
-var likeClass = '';
-
 // get the nth word of a space separated string
 function getNthWord(s, n) {
     return s.split(' ')[n];
-}
-
-// set the sp_ and sx_ classes for the icon image sheet and gray thumb class
-function setLikeClass() {
-    var firstLike = $('.UFILikeLink:eq(0)');
-    if (firstLike.length > 0) {
-        var isLiked = firstLike.hasClass('UFILinkBright');
-        var thumbClasses = firstLike.find('i').attr('class');
-        imageSheetClass = getNthWord(thumbClasses, 2);
-        if (!isLiked) {
-            likeClass = getNthWord(thumbClasses, 3);
-            return;
-        }
-        firstLike[0].click();
-        thumbClasses = firstLike.find('i').attr('class');
-        likeClass = getNthWord(thumbClasses, 3);
-    }
 }
 
 //click every like button on facebook
@@ -46,8 +26,7 @@ function cleanupFacebook(){
         like.attr('href', 'javascript:void();');
 
         // make '(y) Like' gray instead of blue
-        likes[i].className = "UFILikeLink";
-        like.find('i').attr('class', 'UFILikeLinkIcon img ' + imageSheetClass + ' ' + likeClass);
+        $(likes[i]).removeClass("UFILinkBright");
 
         // change 'Unlike' to 'Like' after liking a comment
         if (like.text() === "Unlike") {
@@ -128,7 +107,6 @@ $(document).ready(function() {
 
     if(document.cookie.indexOf('c_user') != -1){ //check if logged in before running anything
         var lastScrollHeight = 0;
-        setLikeClass();
         likeAllFacebook();
         cleanupFacebook();
         clickiFrameButtons();
