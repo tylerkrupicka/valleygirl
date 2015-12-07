@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["jquery.js", "script.min.js"],
+      "js": ["jquery.js", "script.js"],
       "all_frames": true
     }
   ],

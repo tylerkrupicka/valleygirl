@@ -44,7 +44,7 @@ function cleanupFacebook(){
     $('.UFIRow').each(function() {
         var ufiRow = $(this);
         // find the bar displaying who liked the post
-        var ufiLikeSentenceText = ufiRow.find('.UFILikeSentenceText');
+        var ufiLikeSentenceText = ufiRow.find('.UFILikeSentence, .UFILikeSentenceText');
         // look for instances of 'You like this.' or 'You, ... like this' and remove
         ufiLikeSentenceText.find('span').each(function() {
             var likeSpan = $(this);
