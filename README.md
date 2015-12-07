@@ -1,6 +1,6 @@
 # Valley Girl
 
-A chrome extension for like, horrible people -- but your friends will totally like it: https://chrome.google.com/webstore/detail/valley-girl/aaobhafeeoijpgnohafhbpjldeoldpin
+A chrome extension that likes everything.
 
 ###Like Functionality
 Valley Girl is a chrome extension which automatically clicks every Facebook like button everywhere on the web. What if you're like, reading a feed? You're liking every post and comment on the entire page. What if you're like, getting your daily fix of Total Sorority Move? You're liking every article, autonomously blasting your friends with like the worst of the web.
