@@ -1,16 +1,16 @@
 //click every like button on facebook
 function likeAllFacebook(){
-      //like everything on the news feed
-      var likes = $('.UFILikeLink');
-      for (var i = 0; i < likes.length; i++) {
-          var like = $(likes[i]);
-          if (!like.hasClass('UFILinkBright') && like.text() !== 'Unlike' && like.attr('href') == "#") {
-              // don't let it scroll to the top
-              like.attr('href', 'javascript:void();');
-              // fire away!
-              likes[i].click();
-          }
+    //like everything on the news feed
+    var likes = $('.UFILikeLink');
+    for (var i = 0; i < likes.length; i++) {
+      var like = $(likes[i]);
+      if (!like.hasClass('UFILinkBright') && like.text() !== 'Unlike' && like.attr('href') == "#") {
+          // don't let it scroll to the top
+          like.attr('href', 'javascript:void();');
+          // fire away!
+          likes[i].click();
       }
+    }
 }
 
 //hide the likes and make it seem normal
@@ -99,6 +99,10 @@ $(document).ready(function() {
         var lastScrollHeight = 0;
         likeAllFacebook();
         cleanupFacebook();
+        // oh my god seriously
+        setTimeout(cleanupFacebook, 100);
+        setTimeout(cleanupFacebook, 300);
+        setTimeout(cleanupFacebook, 1000);
         clickiFrameButtons();
 
         $(document).on('scroll', function() {
