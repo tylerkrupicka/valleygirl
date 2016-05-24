@@ -15,6 +15,10 @@ function likeAllFacebook(){
 
 //hide the likes and make it seem normal
 function cleanupFacebook(){
+
+    // get user's name so we know who to hide later on
+    fbname = $('a.fbxWelcomeBoxName').text();
+
     var likes = $('.UFILikeLink');
     for (var i = 0; i < likes.length; i++) {
         var like = $(likes[i]);
@@ -22,6 +26,7 @@ function cleanupFacebook(){
 
         // make '(y) Like' gray instead of blue
         $(likes[i]).removeClass("UFILinkBright");
+        $(likes[i]).attr('style', '');
 
         // change 'Unlike' to 'Like' after liking a comment
         if (like.text() === "Unlike") {
@@ -42,37 +47,37 @@ function cleanupFacebook(){
         }
     }
     $('.UFIRow').each(function() {
-        var ufiRow = $(this);
         // find the bar displaying who liked the post
-        var ufiLikeSentenceText = ufiRow.find('.UFILikeSentence, .UFILikeSentenceText');
+        var ufiRow = $(this);
         // look for instances of 'You like this.' or 'You, ... like this' and remove
-        ufiLikeSentenceText.find('span').each(function() {
+        ufiRow.find('span').each(function() {
             var likeSpan = $(this);
-            // when only you like this, either float the seen count to the left or remove row if seen count isn't present
-            if (likeSpan.text() === "You like this.") {
-                likeSpan.hide();
-                // float seen count to left
-                if (ufiRow.find('.UFISeenCount').length > 0) {
-                    ufiRow.find('.UFISeenCountRight').removeClass('UFISeenCountRight');
-                    ufiRow.find('> .clearfix > .rfloat').removeClass('rfloat');
-                    ufiRow.find('> .clearfix > ._ohf').removeClass('_ohf');
-                // remove bar
-                } else {
-                    ufiLikeSentenceText.parent().parent().parent().hide();
+            likeText = likeSpan.text();
+            // when only you like this...
+            if (likeSpan.text() === fbname) {
+                // hide your name
+                likeSpan.text('');
+                // hide the hidden like count of 1
+                ufiRow.find('span._1g5v > span').text('');
+                // hide the thumbs up icon
+                ufiRow.find('._3t54 a').hide();
+                // if no one has seen this post, then remove the whole bar
+                if (ufiRow.find('.UFISeenCount').length == 0 &&
+                    !ufiRow.hasClass('UFIComment')) {
+                    ufiRow.hide();
+                    ufiRow.parent().find('._2o9m').addClass('_4204');
                 }
             }
-            // otherwise just remove the 'you...' part
-            if (likeSpan.text() === "You, " || likeSpan.text() === "You and ") {
-                likeSpan.hide();
-                // if only one other person liked the post, then replace ' like this.' with ' likes this'
-                var otherLikes = likeSpan.parent().find('> a');
-                if (otherLikes.length === 1 && otherLikes.text().indexOf(' other') === -1) {
-                    ufiLikeSentenceText.children().find('> span').each(function() {
-                        if ($(this).text().indexOf(' this.') > -1) {
-                            $(this).text(' likes this.');
-                        }
-                    });
-                }
+
+            // otherwise just remove the 'You...' part
+            if (likeText.startsWith("You and ")) {
+                likeSpan.text(likeText.substring(8, likeText.length));
+            }
+            else if (likeText.startsWith("You, ")) {
+                likeSpan.text(likeText.substring(5, likeText.length));
+            }
+            else {
+                return true;
             }
         });
     });
